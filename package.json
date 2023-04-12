@@ -1,0 +1,21 @@
+{
+  "name": "vue-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev":"rollup -c -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "rollup": "^3.20.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-serve": "^2.0.2"
+  }
+}
