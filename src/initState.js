@@ -36,10 +36,26 @@ function initData(vm) {
     let data = vm.$options.data;
     data = typeof data === 'function' ? data.call(vm) : data
     vm._data = data
+    // 将data 上的属性代理到实例上 vm.mes = vm._data.mes
+    for (let key in data) {
+        proxy(vm,'_data',key)
+    }
     //对数据进行劫持
     observe(data)
 
 }
+ // 将data 上的属性代理到实例上 vm.mes = vm._data.mes
+function proxy(vm, source, key) {
+    Object.defineProperty(vm, key, {
+        get() {
+            return vm[source][key]
+        },
+        set(newVal) {
+            vm[source][key] = newVal
+        }
+    })
+}
+ 
 function initComputed(vm) {
     console.log('initComputed')
 }

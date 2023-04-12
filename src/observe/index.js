@@ -11,6 +11,11 @@ export function observe(data) {
 // Observer类的作用：因为Object.defineProperty只能对对象的一个熟悉进行劫持，封装后可以对对象进行劫持
 class Observer {
     constructor(value) {
+        // 劫持数组时方便拿到Observer类上的方法
+        Object.defineProperty(value, '__ob__', {
+            enumerable: false,
+            value: this
+        })
         if (Array.isArray(value)) {
             // @ts-ignore
             value.__proto__ = arrayMethods
@@ -28,6 +33,7 @@ class Observer {
         });
     }
     observeArray(value) {
+        debugger
         value.forEach(item => {
             observe(item)
         });

@@ -66,11 +66,28 @@
   var methods = ['push', 'pop', 'unshift', 'shift', 'splice', 'sort', 'reverse'];
   methods.forEach(function (item) {
     arrayMethods[item] = function () {
-      console.log('数组劫持了');
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
-      oldArrayProtoMethods[item].apply(this, args);
+      console.log('数组劫持了', args);
+      var result = oldArrayProtoMethods[item].apply(this, args);
+      var inserted;
+      switch (item) {
+        case 'push':
+          inserted = args;
+          break;
+        case 'unshift':
+          inserted = args;
+          break;
+        case 'splice':
+          inserted = args.splice(2);
+          break;
+      }
+      var ob = this.__ob__;
+      if (inserted) {
+        ob.observeArray(inserted);
+      }
+      return result;
     };
   });
 
@@ -85,6 +102,11 @@
   var Observer = /*#__PURE__*/function () {
     function Observer(value) {
       _classCallCheck(this, Observer);
+      // 劫持数组时方便拿到Observer类上的方法
+      Object.defineProperty(value, '__ob__', {
+        enumerable: false,
+        value: this
+      });
       if (Array.isArray(value)) {
         // @ts-ignore
         value.__proto__ = arrayMethods;
@@ -105,6 +127,7 @@
     }, {
       key: "observeArray",
       value: function observeArray(value) {
+        debugger;
         value.forEach(function (item) {
           observe(item);
         });
@@ -162,8 +185,23 @@
     var data = vm.$options.data;
     data = typeof data === 'function' ? data.call(vm) : data;
     vm._data = data;
+    // 将data 上的属性代理到实例上 vm.mes = vm._data.mes
+    for (var key in data) {
+      proxy(vm, '_data', key);
+    }
     //对数据进行劫持
     observe(data);
+  }
+  // 将data 上的属性代理到实例上 vm.mes = vm._data.mes
+  function proxy(vm, source, key) {
+    Object.defineProperty(vm, key, {
+      get: function get() {
+        return vm[source][key];
+      },
+      set: function set(newVal) {
+        vm[source][key] = newVal;
+      }
+    });
   }
   function initComputed(vm) {
     console.log('initComputed');

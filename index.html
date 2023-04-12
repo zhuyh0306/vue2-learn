@@ -16,6 +16,7 @@
                     title:'hellow',
                     sub:'h2'
                 },
+                arr:[],
                 list:[1,2,{
                     a:'hellow',
                     b:'h2'
@@ -26,7 +27,8 @@
             },
             watch:{}
         })
-        console.log(vm._data.list[2].a)
+        console.log(vm._data.arr.push({v:1}))
+        console.log(vm.arr[0].v)
     </script>
 </head>
 <body>
