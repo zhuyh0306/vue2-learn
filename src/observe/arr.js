@@ -20,7 +20,7 @@ let methods = [
 methods.forEach((item) => {
     arrayMethods[item] = function (...args) {
 
-        console.log('数组劫持了',args)
+        // console.log('数组劫持了',args)
         let result = oldArrayProtoMethods[item].apply(this, args)
         let inserted
         switch (item) {

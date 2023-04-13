@@ -6,32 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./dist/index.js"></script>
-    <script>
-        console.log(Vue)
-       const vm= new Vue({
-            el:'#root',
-            data:{
-                name:'title',
-                obj:{
-                    title:'hellow',
-                    sub:'h2'
-                },
-                arr:[],
-                list:[1,2,{
-                    a:'hellow',
-                    b:'h2'
-                }]
-            },
-            props:{
 
-            },
-            watch:{}
-        })
-        console.log(vm._data.arr.push({v:1}))
-        console.log(vm.arr[0].v)
-    </script>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">ffff
+        <div>
+            ggg
+            {{name}}
+            <span class="spanClass">span</span>
+        </div>
+        <div>22</div>
+    </div>
 </body>
+<script type='text/javascript'>
+        
+
+   const vm= new Vue({
+        el:'#root',
+        data:{
+            name:'title',
+            obj:{
+                title:'hellow',
+                sub:'h2'
+            },
+            arr:[],
+            list:[1,2,{
+                a:'hellow',
+                b:'h2'
+            }]
+        },
+        props:{
+
+        },
+        watch:{}
+    })
+</script>
 </html>
