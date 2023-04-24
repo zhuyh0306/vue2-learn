@@ -9,22 +9,23 @@
 
 </head>
 <body>
-    <div id="root">ffff
-        <div>
-            ggg
-            {{name}}
-            <span class="spanClass">span</span>
-        </div>
-        <div>22</div>
+    <div id="root" style="color:red;font-size:20px">ffff{{msg}}gggg{{obj.title}}jjjj
+            <span class="spanClass"  >span{{list.length}}</span>
     </div>
 </body>
 <script type='text/javascript'>
         
-
+Vue.Mixin({
+    created:function a(){console.log('fffffffff')},
+})
+Vue.Mixin({
+    created:function c(){console.log('ffffccccfffff')},
+})
    const vm= new Vue({
         el:'#root',
         data:{
             name:'title',
+            msg:'msg ttii',
             obj:{
                 title:'hellow',
                 sub:'h2'
@@ -38,7 +39,29 @@
         props:{
 
         },
-        watch:{}
+        updated:function(){
+            console.log('update')
+        },
+        created:function b(){console.log('fffffbbbbbffff')},
+        watch:{
+            'obj.sub':{
+                handle(val){
+                console.log(val)
+            }
+            }
+        }
     })
+    setTimeout(()=>{
+console.log(vm,'0000')
+vm.msg = "Hong文"
+vm.obj.sub='文字'
+vm.list.push(5)
+vm.list.push(5)
+vm.list.push(5)
+vm.$nextTick(()=>{
+    console.log(vm.$el.innerHTML)
+})
+// vm._update(vm._render())
+    },1000)
 </script>
 </html>

@@ -38,6 +38,8 @@ methods.forEach((item) => {
         if (inserted) {
             ob.observeArray(inserted)
         }
+        // console.log(ob.dep,'oooooobbbbb')
+        ob.dep.notify()
         return result
     }
 })
